@@ -8,6 +8,8 @@ public class WeaponSwap : MonoBehaviour
     public GameObject player;
     public static GameObject equippedItem;
     public Transform hand;
+    
+    public static GameObject prefabObject;
 
     // Start is called before the first frame update
     void Start()
@@ -16,7 +18,7 @@ public class WeaponSwap : MonoBehaviour
         Quaternion handRotation = transform.rotation;
 
         equippedItem = ItemHotbar.slot1;
-        Instantiate(equippedItem, handPosition, handRotation, transform);
+        prefabObject = Instantiate(equippedItem, handPosition, handRotation, transform);
     }
 
     // Update is called once per frame
@@ -24,29 +26,28 @@ public class WeaponSwap : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            EquipItem(ItemHotbar.slot1, hand);
+            EquipItem(ItemHotbar.slot1, hand, prefabObject);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            EquipItem(ItemHotbar.slot2, hand);
+            EquipItem(ItemHotbar.slot2, hand, prefabObject);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            EquipItem(ItemHotbar.slot3, hand);
+            EquipItem(ItemHotbar.slot3, hand, prefabObject);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            EquipItem(ItemHotbar.slot4, hand);
+            EquipItem(ItemHotbar.slot4, hand, prefabObject);
         }
 
     }
 
-    public static void EquipItem(GameObject newEquippedItem, Transform targetTransform)
+    public static void EquipItem(GameObject newEquippedItem, Transform targetTransform, GameObject _prefabObject)
     {
-        Destroy(equippedItem);
+        Destroy(_prefabObject);
         equippedItem = newEquippedItem;
-        Instantiate(equippedItem, targetTransform.position, targetTransform.rotation, targetTransform);
-
+        WeaponSwap.prefabObject = Instantiate(equippedItem, targetTransform.position, targetTransform.rotation, targetTransform);
     }
 }
 
